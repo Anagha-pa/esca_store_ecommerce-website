@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Vendor,Product,Customer,Order,OrderItems,CustomerAddress
+from .models import Vendor,Product,Customer,Order,OrderItems,CustomerAddress,ProductRating
 
 
 class VendorSerializer(serializers.ModelSerializer):
@@ -25,9 +25,10 @@ class VendorDetailSerializer(serializers.ModelSerializer):
 
 
 class ProductListSerializer(serializers.ModelSerializer):
+    product_ratings = serializers.StringRelatedField(many=True,read_only=True)
     class Meta:
         model = Product
-        fields = ['id','category','vendor','title','detail','price']
+        fields = ['id','category','vendor','title','detail','price','product_ratings']
 
     def __init__(self, *args, **kwargs):
         super(ProductListSerializer,self).__init__(*args,**kwargs)
@@ -36,9 +37,10 @@ class ProductListSerializer(serializers.ModelSerializer):
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
+    product_ratings = serializers.StringRelatedField(many=True,read_only=True)
     class Meta:
         model = Product
-        fields = ['id','category','vendor','title','detail','price']
+        fields = ['id','category','vendor','title','detail','price','product_ratings']
 
     def __init__(self, *args, **kwargs):
         super(ProductDetailSerializer,self).__init__(*args,**kwargs)
@@ -92,8 +94,19 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 class CustomerAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAddress
-        fields = ['id','Customer','address']
+        fields = ['id','customer','address','default_address']
 
     def __init__(self, *args, **kwargs):
         super(CustomerAddressSerializer,self).__init__(*args,**kwargs)
+        self.Meta.depth = 1
+
+
+
+class ProductRatingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductRating
+        fields = ['id','customer','product','rating','reviews','add_time']
+
+    def __init__(self, *args, **kwargs):
+        super(ProductRatingSerializer,self).__init__(*args,**kwargs)
         self.Meta.depth = 1

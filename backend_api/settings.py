@@ -45,7 +45,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    'main',
+    'apps.main',
 ]
 
 
@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 
-    'DEFAULT_PAGINATION_CLASS': 'main.pagination.CustomPagination',
+    'DEFAULT_PAGINATION_CLASS': 'apps.main.pagination.CustomPagination',
     'PAGE_SIZE': 1
 }
 

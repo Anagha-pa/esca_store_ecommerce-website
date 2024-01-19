@@ -1,6 +1,11 @@
 from django.urls import path
-from .views import VendorList,VendorDetails,ProductList,ProductDetails,CustomerList,CustomerDetails,OrderList,OrderDetails
+from .views import VendorList,VendorDetails,ProductList,ProductDetails,CustomerList,CustomerDetails,OrderList,OrderDetails,CustomerAddressViewSet,ProductRatingViewSet
+from rest_framework import routers
 
+
+router = routers.DefaultRouter()
+router.register('address',CustomerAddressViewSet)
+router.register('productrating',ProductRatingViewSet)
 
 urlpatterns = [
    
@@ -16,3 +21,5 @@ urlpatterns = [
     path('order-details/<int:pk>/',OrderDetails.as_view()),
 
 ]
+
+urlpatterns+=router.urls
